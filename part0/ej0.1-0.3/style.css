@@ -1,0 +1,102 @@
+
+/* Selectores de elemento */
+
+body {
+    margin: 0;
+    background-color: rgb(31, 31, 31);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* seleccion de múltiples elementos html */
+p, li, h2 {
+    color: red;
+}
+
+/* Selectores de ID */
+
+#mi-parrafo {
+    font-weight: 200;
+}
+
+/* Selector de clase */
+
+.item-lista-compra{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Selector de atributo */
+
+img[src] {
+    display: block;
+    width: 200px;
+}
+
+/* Selector de pseudoclase */
+
+img:hover {
+    width: 300px;
+    transition-duration: 2s;
+}
+
+/* Probando propiedades */
+
+h1, h2{
+    padding-left: 5px;
+}
+
+p {
+    padding: 10px;
+}
+
+img {
+    margin: 15px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    padding-left: 10px;
+}
+
+/* Estilos formulario */
+
+form {
+    display: block;
+    width: 300px;
+    margin-left: 10px;
+}
+
+label, input, textarea, button {
+    display: block;
+    margin: 10px;
+}
+
+.ul-form {
+    list-style-type: none;
+    padding-left: 0px;
+    border: 1px solid white;
+}
+
+.ul-form > li {
+    color: white;
+}
+
+button {
+    background-color: white;
+    color: rgb(31, 31, 31);
+    border-radius: 10px;
+    padding: 10px 25px;
+    border: none;
+    font-size: 13px;
+}
+
+input {
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: red;
+    color: white;
+}
