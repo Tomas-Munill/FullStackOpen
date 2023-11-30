@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Hello = (props) => {
@@ -18,17 +18,27 @@ const App = () => {
   const b = 20
   const name = "Ricardo"
 
+  const [counter, setCounter] = useState(0);
+
+  const handleClick = () => {
+    setCounter(counter + 1);
+  }
+
   return (
   <>
     <p>Hello world, it is {now.toString()}</p>
     <p>
       {a} + {b} is {a+b}
     </p>
-    // Este es un componente nuevo y puede ser reutilizado muchas veces
+    {/* Este es un componente nuevo y puede ser reutilizado muchas veces*/}
     <Hello name="Tomas" age="20" />
     <Hello name="Ivan" age="20" />
     <Hello name="Tadeo" age="20" />
     <Hello name={name} age={a+b} />
+
+    <h2>Contador de clicks</h2>
+    <div>{counter}</div>
+    <button onClick={handleClick}>+</button>
   </>
   )
 }
