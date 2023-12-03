@@ -37,3 +37,6 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/react,visualstudiocode
+
+# Ignorar archivos .env.local que se utiliza para anular las variables de entorno locales definidas en .env
+**/*.env.local
