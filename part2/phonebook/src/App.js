@@ -66,7 +66,7 @@ const App = () => {
 
       // enviar datos al servidor
       peopleService.create(newPerson)
-      .then(person => {
+        .then(person => {
         setPersons(persons.concat(person));
         setNewName('');
         setNewNumber('');
@@ -74,8 +74,13 @@ const App = () => {
         setNotificationMessage(`Added ${newPerson.name}`);
         setTimeout(() => setNotificationMessage(null), 5000);
       })
-      .catch(error => console.error('Se produjo un error al insertar:', error));    
-    } 
+        .catch(error => {
+          console.error('Se produjo un error al insertar:', error.response.data);
+          setIsSuccessful(false);
+          setNotificationMessage(error.response.data.error);
+          setTimeout(() => setNotificationMessage(null), 5000);
+        });    
+    }
     else {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         peopleService.updateNumber(personaEncontrada.id, newPerson)
@@ -87,7 +92,12 @@ const App = () => {
           setNotificationMessage(`Updated ${newPerson.name}`);
           setTimeout(() => setNotificationMessage(null), 5000);
         })
-        .catch(error => console.error('Se produjo un error al actualizar:', error));
+        .catch(error => {
+          console.error('Se produjo un error al actualizar:', error.response.data);
+          setIsSuccessful(false);
+          setNotificationMessage(error.response.data.error);
+          setTimeout(() => setNotificationMessage(null), 5000);
+        });
       }
     }
   }
