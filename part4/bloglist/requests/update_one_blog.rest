@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/657c726cc022a4c7887290aa
+Content-Type: application/json
+
+{
+  "title": "Programming Blog",
+  "author": "Juan Perez",
+  "url": "juanperezprogramming.com",
+  "likes": 1000
+}

@@ -102,7 +102,7 @@ const mostLikes = (blogs) => {
     }
   });
 
-  console.log(authors);
+  // console.log(authors);
 
   return authorMostLikes;
 };
