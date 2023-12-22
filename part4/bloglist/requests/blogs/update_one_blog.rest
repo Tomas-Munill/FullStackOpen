@@ -1,9 +1,10 @@
-PUT http://localhost:3003/api/blogs/657c726cc022a4c7887290aa
+PUT http://localhost:3003/api/blogs/657f46ff9c6eade2e10a4893
 Content-Type: application/json
 
 {
-  "title": "Programming Blog",
-  "author": "Juan Perez",
-  "url": "juanperezprogramming.com",
-  "likes": 1000
+  "title": "Cocina blog",
+  "author": "Sofia Perez",
+  "url": "sofiacocina.com/blogs/receta",
+  "likes": 59,
+  "user": "657f11d3e4472d37f1c17bc7"
 }
