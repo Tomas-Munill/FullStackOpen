@@ -106,7 +106,7 @@ describe('Blog app', function () {
         cy.get('button').contains('remove').should('not.exist');
       });
 
-      // Realice una prueba que verifique que los blogs estén ordenados de acuerdo con los likes con el blog con más likes en primer lugar.
+      // 5.23 Realice una prueba que verifique que los blogs estén ordenados de acuerdo con los likes con el blog con más likes en primer lugar.
 
       it('Los blogs están ordenados de acuerdo con los likes', function() {
         const blog1 = {
