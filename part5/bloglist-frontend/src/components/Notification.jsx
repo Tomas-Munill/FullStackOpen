@@ -20,7 +20,7 @@ const Notification = ({ message, isSuccessful }) => {
     styles.borderColor = 'red';
   }
 
-  return <div style={styles}>{message}</div>;
+  return <div className="error" style={styles}>{message}</div>;
 };
 
 export default Notification;
