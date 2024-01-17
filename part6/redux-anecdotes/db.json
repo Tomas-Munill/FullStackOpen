@@ -33,7 +33,17 @@
     {
       "id": "eb97",
       "content": "hello word 123!",
-      "votes": 0
+      "votes": 6
+    },
+    {
+      "id": "e5ec",
+      "content": "hello word 1234!",
+      "votes": 1
+    },
+    {
+      "id": "7718",
+      "content": "Any people ...",
+      "votes": 7
     }
   ]
 }
