@@ -1,7 +1,9 @@
 import { useQueryClient, useMutation } from "react-query"
 import { createAnecdote } from "../requests"
+import { useNotificationDispatch } from "../NotificationContext"
 
 const AnecdoteForm = () => {
+  const notificationDispatch = useNotificationDispatch()
   const queryClient = useQueryClient()
 
   const newAnecdoteMutation = useMutation(createAnecdote, {
@@ -9,6 +11,11 @@ const AnecdoteForm = () => {
       //queryClient.invalidateQueries('anecdotes')
       const anecdotes = queryClient.getQueryData('anecdotes')
       queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote))
+    },
+    onError: (error) => {
+      console.error(error)
+      notificationDispatch({type:'SET_NOTIFICATION', payload: 'The content must be 5 or more characters.'})
+      setTimeout(() => notificationDispatch({type:'CLEAR_NOTIFICATION'}), 5000)
     }
   })
 
@@ -20,6 +27,8 @@ const AnecdoteForm = () => {
       content: content,
       votes: 0
     })
+    notificationDispatch({type:'SET_NOTIFICATION', payload: `you added ${content}`})
+    setTimeout(() => notificationDispatch({type:'CLEAR_NOTIFICATION'}), 5000)
 }
 
   return (
