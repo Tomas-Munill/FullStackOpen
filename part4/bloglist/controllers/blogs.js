@@ -13,6 +13,10 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const tokenUser = request.user;
 
   const user = await User.findById(tokenUser.id);
+  if (!user) {
+    return response.status(404).json({ error: 'User not found' });
+  }
+
   const blog = new Blog({
     title: request.body.title,
     author: request.body.author,
@@ -22,9 +26,11 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   });
 
   const savedBlog = await blog.save();
+  const savedPopulatedBlog = await Blog.findById(savedBlog._id).populate('user', {userName:1, name:1, id:1});
+
   user.blogs = user.blogs.concat(savedBlog._id);
   await user.save();
-  response.status(201).json(savedBlog);
+  response.status(201).json(savedPopulatedBlog);
 });
 
 blogsRouter.delete('/:id', middleware.userExtractor ,async (request, response) => {

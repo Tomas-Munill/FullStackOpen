@@ -3,8 +3,8 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRvbWltdW5pbGwxNyIsImlkIjoiNjU3ZjExZDNlNDQ3MmQzN2YxYzE3YmM3IiwiaWF0IjoxNzAyODQyMzYyfQ.QCRbbINxtKLoJpSj4XufDk_QR158U-xndgmTafygGNo
 
 {
-  "title": "Tech blog",
-  "author": "Julian Juarez",
-  "url": "technew.com/blogs/iphone16",
-  "likes": 87
+  "title": "Test driven development",
+  "author": "Juan Perez",
+  "url": "https://aboutTDD.com/",
+  "likes": 0
 }
