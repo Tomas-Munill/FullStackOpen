@@ -1,10 +1,10 @@
-PUT http://localhost:3003/api/blogs/657f46ff9c6eade2e10a4893
+PUT http://localhost:3003/api/blogs/65ba5e491810ab0c19eb819f
 Content-Type: application/json
 
 {
-  "title": "Cocina blog",
-  "author": "Sofia Perez",
-  "url": "sofiacocina.com/blogs/receta",
-  "likes": 59,
+  "title": "Test driven development",
+  "author": "Juan Perez",
+  "url": "https://aboutTDD.com/",
+  "likes": 7,
   "user": "657f11d3e4472d37f1c17bc7"
 }
