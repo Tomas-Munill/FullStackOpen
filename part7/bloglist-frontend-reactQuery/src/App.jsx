@@ -1,58 +1,78 @@
-import { useEffect, useRef } from 'react';
-import Blogs from './components/Blogs';
+import { useEffect } from 'react';
 import Notification from './components/Notification';
-import blogService from './services/blogs';
 import LoginForm from './components/LoginForm';
-import BlogForm from './components/BlogForm';
-import Togglable from './components/Togglable';
+import Home from './components/Home';
+import Users from './components/Users';
+import User from './components/User';
 import { useAppDispatch, useAppState } from './AppContext';
-import { useQuery } from 'react-query';
 import { checkLoggedIn, logoutUser } from './reducers/userReducer';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import blogService from './services/blogs';
+import userService from './services/users';
+import BlogView from './components/BlogView';
 
 const App = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppState();
 
-  const blogFormRef = useRef();
-
   const blogsQueryResult = useQuery('blogs', blogService.getAll);
+  const usersQueryResult = useQuery('users', userService.getAll);
 
   useEffect(() => {
     checkLoggedIn(dispatch);
   }, []);
 
+  const navStyle = {
+    listStyleType: 'none',
+    padding: 0,
+  };
+  
+  const liStyle = {
+    display: 'inline',
+    marginRight: '10px',
+  };
+
   if (user === null) {
     return <LoginForm />;
   }
 
-  if (blogsQueryResult.isLoading) {
-    return <div>loading data...</div>;
-  }
-
-  if (blogsQueryResult.isError) {
-    return <div>blog service not available due to problems in server</div>;
-  }
-
-  const blogs = blogsQueryResult.data;
-
   return (
-    <div>
-      <h2>blogs</h2>
+    <Router>
+      <nav>
+        <ul style={navStyle}>
+          <li style={liStyle}><Link to='/'>blogs</Link></li>
+          <li style={liStyle}><Link to='/users'>users</Link></li>
+          <li style={liStyle}>
+            <span>{user.name} logged in</span>
+            <button type="button" onClick={() => logoutUser(dispatch)}>
+              logout
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <h1>blog app</h1>
       <Notification />
-      <p>{user.name} logged in</p>
-      <button type="button" onClick={() => logoutUser(dispatch)}>
-        logout
-      </button>
 
-      <Togglable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm
-          id="frm-blog"
-          toggleVisibility={() => blogFormRef.current.toggleVisibility()}
+      <Routes>
+        <Route
+          path="/"
+          element={<Home blogsQueryResult={blogsQueryResult} />}
         />
-      </Togglable>
-
-      <Blogs blogs={blogs} loggedUsername={user.userName} />
-    </div>
+        <Route
+          path="/users"
+          element={<Users usersQueryResult={usersQueryResult} />}
+        />
+        <Route
+          path="/users/:id"
+          element={<User usersQueryResult={usersQueryResult} />}
+        />
+        <Route
+          path="/blogs/:id"
+          element={<BlogView blogsQueryResult={blogsQueryResult} />}
+        />
+      </Routes>
+    </Router>
   );
 };
 

@@ -78,4 +78,15 @@ blogsRouter.put('/:id', async (request, response) => {
 
 });
 
+/*
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const id = request.params.id;
+
+  return null;
+  //const blog = Blog.findById(id)
+  // buscar el blog por id
+  // añadir el comentario al array y guardar el blog
+});
+*/
+
 module.exports = blogsRouter;
