@@ -53,4 +53,15 @@ const deleteBlog = async (id) => {
   }
 };
 
-export default { setToken, getAll, create, update, deleteBlog };
+const createComment = async ( {id, comment} ) => {
+  try {
+    const response = await axios.post(`${baseUrl}/${id}/comments`, {comment: comment});
+    return response.data
+  } catch (error) {
+    console.error('Error al añadir un comentario a un blog:', error);
+    throw error;
+  }
+  
+}
+
+export default { setToken, getAll, create, update, deleteBlog, createComment };

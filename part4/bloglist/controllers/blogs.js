@@ -78,15 +78,21 @@ blogsRouter.put('/:id', async (request, response) => {
 
 });
 
-/*
 blogsRouter.post('/:id/comments', async (request, response) => {
   const id = request.params.id;
+  const comment = request.body.comment;
 
-  return null;
-  //const blog = Blog.findById(id)
-  // buscar el blog por id
-  // añadir el comentario al array y guardar el blog
+  const blog = await Blog.findById(id);
+  if (!blog) {
+    return response.status(404).json({error: 'Blog no encontrado'});
+  }
+
+  blog.comments.push(comment);
+  
+  const updatedBlog = await blog.save();
+  await updatedBlog.populate('user', { userName: 1, name: 1, id: 1 });
+
+  return response.status(200).json(updatedBlog);
 });
-*/
 
 module.exports = blogsRouter;

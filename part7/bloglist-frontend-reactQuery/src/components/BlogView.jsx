@@ -3,6 +3,7 @@ import { useAppDispatch, useAppState } from '../AppContext';
 import { useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogs';
 import { useNavigate } from 'react-router-dom';
+import { useField } from '../hooks';
 
 const BlogView = ({ blogsQueryResult }) => {
   const id = useParams().id;
@@ -10,6 +11,7 @@ const BlogView = ({ blogsQueryResult }) => {
   const { user } = useAppState();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
+  const comment = useField('text');
 
   const updateBlogMutation = useMutation(blogService.update, {
     onSuccess: (updatedBlog) => {
@@ -37,6 +39,27 @@ const BlogView = ({ blogsQueryResult }) => {
       const blogs = queryClient.getQueryData('blogs');
       const blogsAfterDeleting = blogs.filter((b) => b.id !== deletedBlogId);
       queryClient.setQueryData('blogs', blogsAfterDeleting);
+    },
+    onError: () => {
+      if (error.response && error.response.data && error.response.data.error) {
+        showAndClearNotification(error.response.data.error, false, dispatch);
+      } else {
+        showAndClearNotification(
+          'An unexpected error occurred',
+          false,
+          dispatch
+        );
+      }
+    },
+  });
+
+  const commentBlogMutation = useMutation(blogService.createComment, {
+    onSuccess: (updatedBlog) => {
+      const blogs = queryClient.getQueryData('blogs');
+      const updatedBlogs = blogs.map((b) =>
+        b.id === updatedBlog.id ? updatedBlog : b
+      );
+      queryClient.setQueryData('blogs', updatedBlogs);
     },
     onError: () => {
       if (error.response && error.response.data && error.response.data.error) {
@@ -90,6 +113,12 @@ const BlogView = ({ blogsQueryResult }) => {
 
   const blog = blogs.find((b) => b.id === id);
 
+  const addComment = (event) => {
+    event.preventDefault();
+    commentBlogMutation.mutate({id: blog.id, comment: comment.value})
+    comment.reset();
+  }
+
   return (
     <div>
       <h2>{blog.title}</h2>
@@ -110,6 +139,20 @@ const BlogView = ({ blogsQueryResult }) => {
         </button>
       ) : (
         ''
+      )}
+      <h3>comments</h3>
+      <form onSubmit={addComment}>
+        <input {...comment.inputProps} id="comment" />
+        <button type="submit">add comment</button>
+      </form>
+      {blog.comments && blog.comments.length > 0 ? (
+        <ul>
+          {blog.comments.map((c, index) => (
+            <li key={index}>{c}</li>
+          ))}
+        </ul>
+      ) : (
+        <span>No comments</span>
       )}
     </div>
   );
