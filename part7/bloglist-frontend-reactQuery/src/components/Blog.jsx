@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
 
 const Blog = ({ blog }) => {
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  };
-
   return (
-    <div style={blogStyle}>
-      <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
-    </div>
+    <Card className='my-2'>
+      <Card.Body className='py-3'>
+        <Link to={`/blogs/${blog.id}`}>
+          {blog.title} {blog.author}
+        </Link>
+      </Card.Body>
+    </Card>
   );
 };
 

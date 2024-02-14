@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogs';
 import { useAppDispatch } from '../AppContext';
 import { showAndClearNotification } from '../reducers/notificationReducer';
+import { Form, Button, Card } from 'react-bootstrap';
 
 const BlogForm = ({ toggleVisibility }) => {
   const queryClient = useQueryClient();
@@ -53,23 +54,33 @@ const BlogForm = ({ toggleVisibility }) => {
   };
 
   return (
-    <>
-      <h2>create new</h2>
-      <form onSubmit={addBlog}>
-        <div>
-          title: <input {...title.inputProps} id="title" />
-        </div>
-        <div>
-          author: <input {...author.inputProps} id="author" />
-        </div>
-        <div>
-          url: <input {...url.inputProps} id="url" />
-        </div>
-        <button id="btn-create" type="submit">
-          create
-        </button>
-      </form>
-    </>
+    <Card>
+      <Card.Header as="h3">create new</Card.Header>
+      <Card.Body>
+        <Form onSubmit={addBlog}>
+          <Form.Group className="mb-3">
+            <Form.Label>title:</Form.Label>
+            <Form.Control {...title.inputProps} />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>author:</Form.Label>
+            <Form.Control {...author.inputProps} />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>url:</Form.Label>
+            <Form.Control {...url.inputProps} />
+          </Form.Group>
+          <Button
+            size="lg"
+            variant="primary"
+            id="btn-create"
+            type="submit"
+          >
+            create
+          </Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 

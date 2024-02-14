@@ -1,4 +1,5 @@
 import { useAppState } from '../AppContext';
+import { Alert } from 'react-bootstrap'; 
 
 const Notification = () => {
   const { notification } = useAppState();
@@ -7,28 +8,15 @@ const Notification = () => {
     return null;
   }
 
-  const styles = {
-    color: 'green',
-    backgroundColor: 'lightgreen',
-    padding: 15,
-    border: 2,
-    borderRadius: 10,
-    borderColor: 'green',
-    marginBottom: 10,
-    borderStyle: 'solid',
-  };
-
-  if (notification.isSuccessful === false) {
-    styles.color = 'red';
-    styles.backgroundColor = 'lightCoral';
-    styles.borderColor = 'red';
+  if (notification.isSuccessful) {
+    return (
+      <Alert variant='success'>{notification.message}</Alert>
+    )
   }
 
   return (
-    <div className="error" style={styles}>
-      {notification.message}
-    </div>
-  );
+    <Alert variant='danger'>{notification.message}</Alert>
+  )
 };
 
 export default Notification;

@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogs';
 import { useNavigate } from 'react-router-dom';
 import { useField } from '../hooks';
+import { Button, ListGroup, Form } from 'react-bootstrap';
 
 const BlogView = ({ blogsQueryResult }) => {
   const id = useParams().id;
@@ -115,42 +116,46 @@ const BlogView = ({ blogsQueryResult }) => {
 
   const addComment = (event) => {
     event.preventDefault();
-    commentBlogMutation.mutate({id: blog.id, comment: comment.value})
+    commentBlogMutation.mutate({ id: blog.id, comment: comment.value });
     comment.reset();
-  }
+  };
 
   return (
     <div>
       <h2>{blog.title}</h2>
-      {blog.url}
+      <a href={blog.url} target="_blank" rel="noopener noreferrer">{blog.url}</a>
       <br />
       likes {blog.likes}
-      <button onClick={giveALike(blog)} style={buttonStyle}>
+      <Button onClick={giveALike(blog)} size="sm" className="ms-1">
         like
-      </button>
+      </Button>
       <br />
       added by {blog.author}
       {user.userName === blog.user.userName ? (
-        <button
+        <Button
           onClick={removeBlog(blog.id)}
-          style={{ ...buttonStyle, backgroundColor: 'royalblue' }}
+          variant="danger"
+          className="ms-1"
+          size="sm"
         >
           remove
-        </button>
+        </Button>
       ) : (
         ''
       )}
       <h3>comments</h3>
-      <form onSubmit={addComment}>
-        <input {...comment.inputProps} id="comment" />
-        <button type="submit">add comment</button>
-      </form>
+      <Form onSubmit={addComment} className="d-flex">
+        <Form.Control {...comment.inputProps} style={{maxWidth: '300px'}} />
+        <Button type="submit" className="ms-1">
+          add comment
+        </Button>
+      </Form>
       {blog.comments && blog.comments.length > 0 ? (
-        <ul>
+        <ListGroup className="mt-3">
           {blog.comments.map((c, index) => (
-            <li key={index}>{c}</li>
+            <ListGroup.Item key={index}>{c}</ListGroup.Item>
           ))}
-        </ul>
+        </ListGroup>
       ) : (
         <span>No comments</span>
       )}

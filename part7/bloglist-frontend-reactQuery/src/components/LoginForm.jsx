@@ -3,6 +3,7 @@ import Notification from './Notification';
 import { useField } from '../hooks';
 import { loginUser } from '../reducers/userReducer';
 import { useAppDispatch } from '../AppContext';
+import { Form, Button } from 'react-bootstrap';
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -22,20 +23,35 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <h2>Log in to application</h2>
+    <div
+      className="container d-flex justify-content-center align-items-center flex-column"
+      style={{ minHeight: '100vh' }}
+    >
+      <h2>Log in to blog application</h2>
       <Notification />
-      <form onSubmit={handleLogin}>
-        <div>
-          username: <input {...username.inputProps} id="username" />
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="mb-3">
+          <Form.Label>username:</Form.Label>
+          <Form.Control
+            {...username.inputProps}
+            maxLength={20}
+            style={{ maxWidth: '300px', minWidth: '250px' }}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>password:</Form.Label>
+          <Form.Control
+            {...password.inputProps}
+            maxLength={20}
+            style={{ maxWidth: '300px' }}
+          />
+        </Form.Group>
+        <div className="d-grid">
+          <Button id="btn-login" type="submit">
+            login
+          </Button>
         </div>
-        <div>
-          password: <input {...password.inputProps} id="password" />
-        </div>
-        <button id="btn-login" type="submit">
-          login
-        </button>
-      </form>
+      </Form>
     </div>
   );
 };

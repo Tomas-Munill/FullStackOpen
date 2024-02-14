@@ -11,6 +11,7 @@ import { useQuery } from 'react-query';
 import blogService from './services/blogs';
 import userService from './services/users';
 import BlogView from './components/BlogView';
+import { Button, Navbar, Nav } from 'react-bootstrap';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -23,56 +24,71 @@ const App = () => {
     checkLoggedIn(dispatch);
   }, []);
 
-  const navStyle = {
-    listStyleType: 'none',
-    padding: 0,
+  const navLinkStyle = {
+    color: 'inherit',
+    textDecoration: 'none',
+    marginLeft: '1rem'
   };
-  
-  const liStyle = {
-    display: 'inline',
-    marginRight: '10px',
-  };
+
+  const navUserStyle = {
+    paddingLeft: '1rem',
+    paddingRight: '1rem'
+  }
 
   if (user === null) {
     return <LoginForm />;
   }
 
   return (
-    <Router>
-      <nav>
-        <ul style={navStyle}>
-          <li style={liStyle}><Link to='/'>blogs</Link></li>
-          <li style={liStyle}><Link to='/users'>users</Link></li>
-          <li style={liStyle}>
-            <span>{user.name} logged in</span>
-            <button type="button" onClick={() => logoutUser(dispatch)}>
-              logout
-            </button>
-          </li>
-        </ul>
-      </nav>
-      <h1>blog app</h1>
-      <Notification />
+    <div className="container">
+      <Router>
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Navbar.Toggle className='ms-3' aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="#" as="span">
+                <Link style={navLinkStyle} to="/">blogs</Link>
+              </Nav.Link>
+              <Nav.Link href="#" as="span">
+                <Link style={navLinkStyle} to="/users">users</Link>
+              </Nav.Link>
+            </Nav>
+            <div className='ms-auto' style={navUserStyle}>
+              <Navbar.Text>Signed in as: {user.name}</Navbar.Text>
+              <Button
+                className="mx-2"
+                variant="outline-light"
+                onClick={() => logoutUser(dispatch)}
+              >
+                logout
+              </Button>
+            </div>
+          </Navbar.Collapse>
+        </Navbar>
 
-      <Routes>
-        <Route
-          path="/"
-          element={<Home blogsQueryResult={blogsQueryResult} />}
-        />
-        <Route
-          path="/users"
-          element={<Users usersQueryResult={usersQueryResult} />}
-        />
-        <Route
-          path="/users/:id"
-          element={<User usersQueryResult={usersQueryResult} />}
-        />
-        <Route
-          path="/blogs/:id"
-          element={<BlogView blogsQueryResult={blogsQueryResult} />}
-        />
-      </Routes>
-    </Router>
+        <h1>blog app</h1>
+        <Notification />
+
+        <Routes>
+          <Route
+            path="/"
+            element={<Home blogsQueryResult={blogsQueryResult} />}
+          />
+          <Route
+            path="/users"
+            element={<Users usersQueryResult={usersQueryResult} />}
+          />
+          <Route
+            path="/users/:id"
+            element={<User usersQueryResult={usersQueryResult} />}
+          />
+          <Route
+            path="/blogs/:id"
+            element={<BlogView blogsQueryResult={blogsQueryResult} />}
+          />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 

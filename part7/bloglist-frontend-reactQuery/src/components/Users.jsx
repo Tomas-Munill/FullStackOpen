@@ -1,6 +1,5 @@
-import { useQuery } from 'react-query';
-import userService from '../services/users';
 import { Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap'
 
 const Users = ({ usersQueryResult }) => {
 
@@ -17,7 +16,7 @@ const Users = ({ usersQueryResult }) => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <td></td>
@@ -36,7 +35,7 @@ const Users = ({ usersQueryResult }) => {
             )
           })}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

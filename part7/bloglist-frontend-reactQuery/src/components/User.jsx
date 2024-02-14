@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { ListGroup } from "react-bootstrap"; 
 
 const User = ({ usersQueryResult }) => {
   if (usersQueryResult.isLoading) {
@@ -13,19 +14,18 @@ const User = ({ usersQueryResult }) => {
 
   const id = useParams().id
   const user = users.find(u => u.id === id)
-  console.log(user)
 
   return (
     <div>
         <h2>{user.name}</h2>
         <h3>added blogs</h3>
-        <ul>
+        <ListGroup>
           {user.blogs.map(blog => {
             return (
-                <li key={blog.id}>{blog.title}</li>
+                <ListGroup.Item key={blog.id}>{blog.title}</ListGroup.Item>
             )
           })}
-        </ul>
+        </ListGroup>
     </div>
   )
 };
